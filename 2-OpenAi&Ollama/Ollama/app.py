@@ -20,3 +20,15 @@ prompt = ChatPromptTemplate.from_messages(
         ("user", "Question:{question}"),
     ]
 )
+
+
+st.title("LangChain Demo with Ollama -> Gemma Model")
+input_text = st.text_input("what is the question in your mind?")
+
+llm = Ollama(model="gemma3:latest")
+output_parser = StrOutputParser()
+
+chain = prompt | llm | output_parser
+
+if input_text:
+    st.write(chain.invoke({"question": input_text}))
